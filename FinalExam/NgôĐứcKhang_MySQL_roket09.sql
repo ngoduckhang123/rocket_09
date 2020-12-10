@@ -38,26 +38,30 @@ insert into Employee(employee_id, full_name, email, location_id)
 values              (2,'ngo van hong son','nvhs@gmail.com',2),
                     (3,'nguyen duy phuc','ndp@gmai.com',3);
 select*from Employee;
---a
+--a: Lấy tất cả nhân viên thuộc Việt Nam
 
 select * from Employee
 inner join Location on Employee.location_id = Location.location_id
 inner join Country on Location.country_id = Country.country_id
 where Country.country_name = 'Hàn Quốc';
 
---b
+--b: Lấy ra tên quốc gia của employee có email là"..."
 
 select country_name from Country
 inner join Location on Country.country_id = Location.country_id
 inner join Employee on  Location.location_id= Employee.location_id
 where  Employee.email='ndp@gmai.com';
 
---c
+--c: Thống kê mỗi country, mỗi location có bao nhiêu employee đang làm việc.
 
-select count(employee_id) from Country,Location
-inner join Location on Employee.location_id = Location.location_id
-inner join Country on Location.country_id = Country.country_id
-where 
+SELECT 
+    Country.country_name,Location.street_address,
+    COUNT(e.employee_id) AS 'Số lượng thực tập viên'
+FROM
+    Employee
+LEFT JOIN Location  ON Employee.location_id = Location.location_id
+LEFT JOIN Country   ON Country.country_id = Location.country_id
+GROUP BY Country.country_id , Location.location_id;
 
 
 
