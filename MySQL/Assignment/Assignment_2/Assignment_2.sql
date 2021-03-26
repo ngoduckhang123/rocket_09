@@ -73,3 +73,41 @@ delete from trainee where TraineeID = 3;
 
 --Cau6
 update trainee set Training_Class =A002 where TraineeID =5; 
+
+drop table merchandise;
+create table if not exists merchandise(
+merchansise_number varchar(50) primary key,
+merchandise_name   varchar(50),
+unit_price int);
+drop table orders;
+create table if not exists orders(
+customer_name varchar(50) ,
+merchansise_number varchar(50),
+foreign key(merchansise_number) references merchandise(merchansise_number));
+
+insert into merchandise(merchansise_number,merchandise_name,unit_price)
+value ('tv28','28-inch television','250000');
+insert into merchandise(merchansise_number,merchandise_name,unit_price)
+value ('tv28w','28-inch television','250000');
+insert into merchandise(merchansise_number,merchandise_name,unit_price)
+value ('tv32','32-inch television','300000');
+insert into merchandise(merchansise_number,merchandise_name,unit_price)
+value ('tv32w','32-inch television','300000');
+
+
+insert into orders(customer_name,merchansise_number)
+value('OyamaShoten','TV28');
+insert into orders(customer_name,merchansise_number)
+value('OyamaShoten','TV28w');
+insert into orders(customer_name,merchansise_number)
+value('OyamaShoten','TV32');
+insert into orders(customer_name,merchansise_number)
+value('OyamaShokai','TV32');
+insert into orders(customer_name,merchansise_number)
+value('OyamaShokai','TV32w');
+
+
+SELECT DISTINCT customer_name, merchandise_name, unit_price
+FROM orders, merchandise
+WHERE orders.merchansise_number = merchandise.merchansise_number
+
